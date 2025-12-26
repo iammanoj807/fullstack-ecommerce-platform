@@ -50,7 +50,7 @@ const BookDetails = () => {
         }
 
         // Optimistic update - increment cart count immediately
-        incrementCartCount();
+        incrementCartCount(book.id);
         toast.success("Added to cart");
 
         try {
@@ -59,7 +59,7 @@ const BookDetails = () => {
             refreshCart();
         } catch (error) {
             // Rollback on error
-            decrementCartCount();
+            decrementCartCount(book.id);
             toast.error("Failed to add to cart");
         }
     };

@@ -20,6 +20,7 @@ const CartContext = createContext();
  */
 export const CartProvider = ({ children }) => {
     const [cartCount, setCartCount] = useState(0);
+    const [cartItemIds, setCartItemIds] = useState(new Set());
     const { user } = useAuth();
 
     /**
@@ -29,6 +30,7 @@ export const CartProvider = ({ children }) => {
     const fetchCartCount = useCallback(async () => {
         if (!user) {
             setCartCount(0);
+            setCartItemIds(new Set());
             return;
         }
         try {
@@ -36,8 +38,11 @@ export const CartProvider = ({ children }) => {
             const items = response.data?.items || [];
             // Count unique products in cart (not total quantity)
             setCartCount(items.length);
+            // Track IDs of items currently in cart
+            setCartItemIds(new Set(items.map(item => item.bookId || item.book.id)));
         } catch (error) {
             setCartCount(0);
+            setCartItemIds(new Set());
         }
     }, [user]);
 
@@ -56,16 +61,31 @@ export const CartProvider = ({ children }) => {
 
     /**
      * Optimistically increment cart count (for instant UI feedback)
+     * Only increments if the item is NOT already in the cart
      */
-    const incrementCartCount = () => {
-        setCartCount(prev => prev + 1);
+    const incrementCartCount = (bookId) => {
+        if (bookId && !cartItemIds.has(bookId)) {
+            setCartCount(prev => prev + 1);
+            setCartItemIds(prev => {
+                const newSet = new Set(prev);
+                newSet.add(bookId);
+                return newSet;
+            });
+        }
     };
 
     /**
      * Optimistically decrement cart count (for instant UI feedback)
      */
-    const decrementCartCount = () => {
+    const decrementCartCount = (bookId) => {
         setCartCount(prev => Math.max(0, prev - 1));
+        if (bookId) {
+            setCartItemIds(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(bookId);
+                return newSet;
+            });
+        }
     };
 
     return (

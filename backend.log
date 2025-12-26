@@ -62,3 +62,12 @@
 2025-12-26T18:36:22.327Z  INFO 22188 --- [novela] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-12-26T18:36:22.328Z  INFO 22188 --- [novela] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2025-12-26T18:36:22.435Z  WARN 22188 --- [novela] [nio-8081-exec-3] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/cart' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+DEBUG: Fetching orders for user: thapam807@gmail.com
+DEBUG: Found 0 orders for user thapam807@gmail.com
+DEBUG: Fetching orders for user: thapam807@gmail.com
+DEBUG: Found 0 orders for user thapam807@gmail.com
+DEBUG: Order saved successfully with ID: 1 for user: thapam807@gmail.com
+DEBUG: Fetching orders for user: thapam807@gmail.com
+DEBUG: Found 1 orders for user thapam807@gmail.com
+DEBUG: Fetching orders for user: thapam807@gmail.com
+DEBUG: Found 1 orders for user thapam807@gmail.com
